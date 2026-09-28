@@ -1,0 +1,836 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1"
+    >
+
+    <meta name="theme-color" content="#080a14">
+
+    <title>EduAI</title>
+
+    <!-- Main styles -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- KaTeX -->
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.css"
+    >
+</head>
+
+<body>
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<aside id="sidebar">
+
+    <div class="brand">
+        <span>✦</span>
+        <span>EduAI</span>
+    </div>
+
+    <nav>
+
+        <button
+                type="button"
+                data-screen="home"
+        >
+            <span class="nav-emoji">🏠</span>
+            <span>Главная</span>
+        </button>
+
+        <button
+                type="button"
+                data-screen="chat"
+        >
+            <span class="nav-emoji">🤖</span>
+            <span>AI-помощник</span>
+        </button>
+
+        <button
+                type="button"
+                data-screen="tests"
+        >
+            <span class="nav-emoji">📝</span>
+            <span>Тесты</span>
+        </button>
+
+        <button
+                type="button"
+                data-screen="recommendations"
+        >
+            <span class="nav-emoji">💡</span>
+            <span>Рекомендации</span>
+        </button>
+
+        <button
+                type="button"
+                data-screen="experts"
+        >
+            <span class="nav-emoji">👨‍🏫</span>
+            <span>Эксперты</span>
+        </button>
+
+    </nav>
+
+    <!-- =====================================================
+         CHAT HISTORY
+    ====================================================== -->
+
+    <div class="chat-history-panel">
+
+        <button
+                id="newChatButton"
+                class="new-chat-button"
+                type="button"
+        >
+            <span class="new-chat-icon">＋</span>
+            <span>Новый чат</span>
+        </button>
+
+        <div class="chat-history-title">
+            История
+        </div>
+
+        <div
+                id="chatHistoryList"
+                class="chat-history-list"
+        >
+            <div class="chat-history-empty">
+                Здесь появятся твои чаты.
+            </div>
+        </div>
+
+    </div>
+
+</aside>
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main>
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header>
+
+        <button
+                id="menu"
+                class="menu-button"
+                type="button"
+                aria-label="Открыть меню"
+        >
+            ☰
+        </button>
+
+        <div class="header-title">
+            EduAI
+        </div>
+
+        <div class="header-actions">
+
+            <button
+                    id="supportButton"
+                    class="icon-button"
+                    type="button"
+                    title="Поддержка"
+                    aria-label="Поддержка"
+            >
+                🎧
+            </button>
+
+            <button
+                    id="accountButton"
+                    class="icon-button"
+                    type="button"
+                    title="Аккаунт"
+                    aria-label="Аккаунт"
+            >
+                👤
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         ACCOUNT
+    ====================================================== -->
+
+    <div
+            id="accountMenu"
+            class="account-menu"
+            aria-hidden="true"
+    >
+
+        <div
+                class="account-window"
+                role="dialog"
+                aria-modal="true"
+                aria-label="Аккаунт EduAI"
+        >
+
+            <!-- =================================================
+                 LOGIN
+            ================================================== -->
+
+            <div class="auth-login">
+
+                <small>EDUAI ACCOUNT</small>
+
+                <h2>
+                    Войти в аккаунт
+                </h2>
+
+                <p class="auth-subtitle">
+                    Сохрани прогресс и продолжи обучение.
+                </p>
+
+                <form id="loginForm">
+
+                    <input
+                            type="email"
+                            id="loginEmail"
+                            name="email"
+                            placeholder="Электронная почта"
+                            autocomplete="email"
+                            required
+                    >
+
+                    <input
+                            type="password"
+                            id="loginPassword"
+                            name="password"
+                            placeholder="Пароль"
+                            autocomplete="current-password"
+                            required
+                    >
+
+                    <button
+                            type="submit"
+                            class="auth-main-button"
+                    >
+                        Войти
+                    </button>
+
+                </form>
+
+                <div class="auth-divider">
+                    <span>или</span>
+                </div>
+
+                <div class="auth-socials">
+
+                    <button
+                            type="button"
+                            class="social-button google-button"
+                    >
+
+                        <svg
+                                class="social-logo google-logo"
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                        >
+                            <path
+                                    fill="#4285F4"
+                                    d="M21.35 12.27c0-.71-.06-1.39-.18-2.05H12v3.88h5.23a4.47 4.47 0 0 1-1.94 2.93v2.43h3.14c1.84-1.69 2.92-4.18 2.92-7.19z"
+                            />
+                            <path
+                                    fill="#34A853"
+                                    d="M12 21.5c2.63 0 4.84-.87 6.45-2.34l-3.14-2.43c-.87.58-1.98.93-3.31.93-2.55 0-4.71-1.72-5.48-4.03H3.27v2.51A9.74 9.74 0 0 0 12 21.5z"
+                            />
+                            <path
+                                    fill="#FBBC05"
+                                    d="M6.52 13.63A5.86 5.86 0 0 1 6.22 12c0-.57.1-1.12.3-1.63V7.86H3.27A9.75 9.75 0 0 0 2.25 12c0 1.57.38 3.06 1.02 4.14l3.25-2.51z"
+                            />
+                            <path
+                                    fill="#EA4335"
+                                    d="M12 6.34c1.43 0 2.71.49 3.72 1.45l2.79-2.79C16.84 3.46 14.63 2.5 12 2.5a9.74 9.74 0 0 0-8.73 5.36l3.25 2.51 3.25-2.51C7.29 8.06 9.45 6.34 12 6.34z"
+                            />
+                        </svg>
+
+                        <span>
+                            Продолжить с Google
+                        </span>
+
+                    </button>
+
+
+                    <button
+                            type="button"
+                            class="social-button apple-button"
+                    >
+
+                        <svg
+                                class="social-logo apple-logo"
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                        >
+                            <path
+                                    fill="currentColor"
+                                    d="M17.05 12.54c0-2.29 1.87-3.4 1.95-3.45a4.2 4.2 0 0 0-3.3-1.78c-1.39-.14-2.72.82-3.43.82-.72 0-1.82-.8-2.99-.78a4.42 4.42 0 0 0-3.71 2.27c-1.6 2.78-.41 6.88 1.15 9.13.78 1.1 1.69 2.32 2.9 2.27 1.16-.05 1.6-.74 3-.74 1.4 0 1.8.74 3 .72 1.24-.02 2.03-1.11 2.78-2.21a9.05 9.05 0 0 0 1.27-2.56 3.96 3.96 0 0 1-2.37-3.69zM14.78 4.09a3.98 3.98 0 0 0 .91-2.88 4.05 4.05 0 0 0-2.62 1.36 3.8 3.8 0 0 0-.93 2.77 3.35 3.35 0 0 0 2.64-1.25z"
+                            />
+                        </svg>
+
+                        <span>
+                            Продолжить с Apple
+                        </span>
+
+                    </button>
+
+                </div>
+
+                <p class="auth-switch">
+
+                    <span>Нет аккаунта?</span>
+
+                    <button
+                            type="button"
+                            id="showRegister"
+                    >
+                        Зарегистрироваться
+                    </button>
+
+                </p>
+
+            </div>
+
+
+            <!-- =================================================
+                 REGISTER
+            ================================================== -->
+
+            <div class="auth-register">
+
+                <small>EDUAI ACCOUNT</small>
+
+                <h2>
+                    Создать аккаунт
+                </h2>
+
+                <p class="auth-subtitle">
+                    Создай профиль и отслеживай свой прогресс.
+                </p>
+
+                <form id="registerForm">
+
+                    <input
+                            type="text"
+                            id="registerName"
+                            name="name"
+                            placeholder="Имя"
+                            autocomplete="name"
+                            required
+                    >
+
+                    <input
+                            type="email"
+                            id="registerEmail"
+                            name="email"
+                            placeholder="Электронная почта"
+                            autocomplete="email"
+                            required
+                    >
+
+                    <input
+                            type="password"
+                            id="registerPassword"
+                            name="password"
+                            placeholder="Пароль"
+                            autocomplete="new-password"
+                            required
+                    >
+
+                    <button
+                            type="submit"
+                            class="auth-main-button"
+                    >
+                        Создать аккаунт
+                    </button>
+
+                </form>
+
+                <div class="auth-divider">
+                    <span>или</span>
+                </div>
+
+                <div class="auth-socials">
+
+                    <button
+                            type="button"
+                            class="social-button google-button"
+                    >
+
+                        <svg
+                                class="social-logo google-logo"
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                        >
+                            <path
+                                    fill="#4285F4"
+                                    d="M21.35 12.27c0-.71-.06-1.39-.18-2.05H12v3.88h5.23a4.47 4.47 0 0 1-1.94 2.93v2.43h3.14c1.84-1.69 2.92-4.18 2.92-7.19z"
+                            />
+                            <path
+                                    fill="#34A853"
+                                    d="M12 21.5c2.63 0 4.84-.87 6.45-2.34l-3.14-2.43c-.87.58-1.98.93-3.31.93-2.55 0-4.71-1.72-5.48-4.03H3.27v2.51A9.74 9.74 0 0 0 12 21.5z"
+                            />
+                            <path
+                                    fill="#FBBC05"
+                                    d="M6.52 13.63A5.86 5.86 0 0 1 6.22 12c0-.57.1-1.12.3-1.63V7.86H3.27A9.75 9.75 0 0 0 2.25 12c0 1.57.38 3.06 1.02 4.14l3.25-2.51z"
+                            />
+                            <path
+                                    fill="#EA4335"
+                                    d="M12 6.34c1.43 0 2.71.49 3.72 1.45l2.79-2.79C16.84 3.46 14.63 2.5 12 2.5a9.74 9.74 0 0 0-8.73 5.36l3.25 2.51 3.25-2.51C7.29 8.06 9.45 6.34 12 6.34z"
+                            />
+                        </svg>
+
+                        <span>
+                            Продолжить с Google
+                        </span>
+
+                    </button>
+
+
+                    <button
+                            type="button"
+                            class="social-button apple-button"
+                    >
+
+                        <svg
+                                class="social-logo apple-logo"
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                        >
+                            <path
+                                    fill="currentColor"
+                                    d="M17.05 12.54c0-2.29 1.87-3.4 1.95-3.45a4.2 4.2 0 0 0-3.3-1.78c-1.39-.14-2.72.82-3.43.82-.72 0-1.82-.8-2.99-.78a4.42 4.42 0 0 0-3.71 2.27c-1.6 2.78-.41 6.88 1.15 9.13.78 1.1 1.69 2.32 2.9 2.27 1.16-.05 1.6-.74 3-.74 1.4 0 1.8.74 3 .72 1.24-.02 2.03-1.11 2.78-2.21a9.05 9.05 0 0 0 1.27-2.56 3.96 3.96 0 0 1-2.37-3.69zM14.78 4.09a3.98 3.98 0 0 0 .91-2.88 4.05 4.05 0 0 0-2.62 1.36 3.8 3.8 0 0 0-.93 2.77 3.35 3.35 0 0 0 2.64-1.25z"
+                            />
+                        </svg>
+
+                        <span>
+                            Продолжить с Apple
+                        </span>
+
+                    </button>
+
+                </div>
+
+                <p class="auth-switch">
+
+                    <span>Уже есть аккаунт?</span>
+
+                    <button
+                            type="button"
+                            id="showLogin"
+                    >
+                        Войти
+                    </button>
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         HOME
+    ====================================================== -->
+
+    <section
+            id="home"
+            class="screen active"
+    >
+
+        <div class="hero">
+
+            <small>
+                ТВОЙ ЛИЧНЫЙ AI-РЕПЕТИТОР
+            </small>
+
+            <h1>
+                Чем займёмся сегодня?
+            </h1>
+
+            <p>
+                Изучай темы, проходи тесты и отслеживай свой прогресс.
+            </p>
+
+            <div class="prompt">
+
+                <input
+                        id="question"
+                        type="text"
+                        placeholder="Спроси что-нибудь..."
+                        autocomplete="off"
+                >
+
+                <button
+                        id="send"
+                        type="button"
+                        aria-label="Отправить вопрос"
+                >
+                    ➜
+                </button>
+
+            </div>
+
+            <div class="quick">
+
+                <button
+                        type="button"
+                        data-screen="chat"
+                >
+                    Объяснить тему
+                </button>
+
+                <button
+                        type="button"
+                        data-screen="tests"
+                >
+                    Пройти тест
+                </button>
+
+                <button
+                        type="button"
+                        data-screen="recommendations"
+                >
+                    Что повторить?
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="heading">
+
+            <div>
+                <h2>
+                    Продолжить обучение
+                </h2>
+
+                <span>
+                    Твой прогресс
+                </span>
+            </div>
+
+        </div>
+
+        <div
+                id="subjects"
+                class="grid"
+        ></div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CHAT
+    ====================================================== -->
+
+    <section
+            id="chat"
+            class="screen"
+    >
+
+        <div class="chat-page">
+
+            <div class="chat-header">
+
+                <div>
+
+                    <small>
+                        AI-ПОМОЩНИК
+                    </small>
+
+                    <h1>
+                        Разберём любую тему
+                    </h1>
+
+                </div>
+
+                <div class="chat-status">
+                    <span></span>
+                    <span>Онлайн</span>
+                </div>
+
+            </div>
+
+
+            <div
+                    id="chatMessages"
+                    class="chat-messages"
+            >
+
+                <div class="chat-empty">
+
+                    <div class="chat-empty-icon">
+                        ✦
+                    </div>
+
+                    <h2>
+                        Чем могу помочь?
+                    </h2>
+
+                    <p>
+                        Спроси про математику, физику,
+                        программирование или любой другой
+                        учебный предмет.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="chat-input-wrapper">
+
+                <div class="chat-input-box">
+
+                    <textarea
+                            id="chatInput"
+                            rows="1"
+                            placeholder="Напиши сообщение..."
+                    ></textarea>
+
+                    <button
+                            id="chatSend"
+                            type="button"
+                            title="Отправить"
+                            aria-label="Отправить сообщение"
+                    >
+                        ➜
+                    </button>
+
+                </div>
+
+                <div class="chat-hint">
+                    Enter — отправить · Shift + Enter — новая строка
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         TESTS
+    ====================================================== -->
+
+    <section
+            id="tests"
+            class="screen"
+    >
+
+        <div class="card">
+
+            <small>
+                ПРОВЕРЬ ЗНАНИЯ
+            </small>
+
+            <h1>
+                Тесты
+            </h1>
+
+            <div class="tests">
+
+                <div class="test-item">
+
+                    <b>
+                        ∑ Квадратные уравнения
+                    </b>
+
+                    <span>
+                        10 вопросов · Средний
+                    </span>
+
+                    <button
+                            type="button"
+                    >
+                        Начать
+                    </button>
+
+                </div>
+
+
+                <div class="test-item">
+
+                    <b>
+                        ⚛ Электричество
+                    </b>
+
+                    <span>
+                        12 вопросов · Средний
+                    </span>
+
+                    <button
+                            type="button"
+                    >
+                        Начать
+                    </button>
+
+                </div>
+
+
+                <div class="test-item">
+
+                    <b>
+                        ⌘ Основы Python
+                    </b>
+
+                    <span>
+                        15 вопросов · Сложный
+                    </span>
+
+                    <button
+                            type="button"
+                    >
+                        Начать
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         RECOMMENDATIONS
+    ====================================================== -->
+
+    <section
+            id="recommendations"
+            class="screen"
+    >
+
+        <div class="card">
+
+            <small>
+                ПЕРСОНАЛЬНЫЙ ПЛАН
+            </small>
+
+            <h1>
+                Рекомендации
+            </h1>
+
+            <div class="rec">
+
+                <div>
+                    <b>
+                        Повтори дискриминант
+                    </b>
+
+                    <p>
+                        У тебя были ошибки в последних заданиях.
+                    </p>
+                </div>
+
+                <div>
+                    <b>
+                        Теорема Виета
+                    </b>
+
+                    <p>
+                        Следующая тема по математике.
+                    </p>
+                </div>
+
+                <div>
+                    <b>
+                        План на сегодня · 45 мин
+                    </b>
+
+                    <p>
+                        20 мин математики + 25 мин физики.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         EXPERTS
+    ====================================================== -->
+
+    <section
+            id="experts"
+            class="screen"
+    >
+
+        <div class="card center">
+
+            <small>
+                EDUAI PRO
+            </small>
+
+            <h1>
+                Эксперты
+            </h1>
+
+            <p>
+                В PRO можно будет общаться с преподавателями
+                по предметам и направлениям.
+            </p>
+
+            <button
+                    type="button"
+            >
+                Подробнее о PRO
+            </button>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- =========================================================
+     LIBRARIES
+========================================================= -->
+
+<script
+        src="https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.js"
+        defer
+></script>
+
+<script
+        src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"
+        defer
+></script>
+
+<script
+        src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"
+        defer
+></script>
+
+<script
+        src="app.js"
+        defer
+></script>
+
+</body>
+</html>
